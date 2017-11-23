@@ -2,11 +2,18 @@
 using WorkingWithVisualStudio.Models;
 using System.Linq;
 
-namespace WorkingWithVisualStudio.Controllers {
-    public class HomeController : Controller {
+namespace WorkingWithVisualStudio.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ISimpleRepository repository;
 
-        public IActionResult Index()
-            => View(SimpleRepository.SharedRepository.Products
-                        .Where(p => p?.Price < 50));
+        public HomeController(ISimpleRepository repo)
+        {
+            repository = repo;
+        }
+
+        // Right-click on line below and select "Add View..." to build Views\Home\index.cshtml
+        public IActionResult Index() => View(repository.Products.Where(p => p?.Price < 50));
     }
 }
